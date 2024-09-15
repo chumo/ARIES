@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Web Page with Adjustable Bottom Panel</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Add jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Add DataTables JS -->
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
   <style>
     /* Styles for the vertical panel */
     #sidebar {
@@ -118,6 +125,28 @@
       display: flex;
       align-items: center;
     }
+
+    /* Styles for the DataTable in sidebar */
+    #sidebar .dataTables_wrapper {
+      color: white;
+    }
+    #sidebar table.dataTable tbody tr {
+      background-color: #343a40;
+      color: white;
+    }
+    #sidebar table.dataTable tbody tr.selected {
+      background-color: #007bff;
+    }
+    #addRowBtn {
+      margin-top: 10px;
+    }
+    .deleteBtn {
+      padding: 2px 5px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -142,7 +171,17 @@
 
   <!-- Left Sidebar -->
   <div id="sidebar" class="bg-dark">
-    <button class="btn btn-primary" id="openModalButton">Open Panel</button>
+    <button id="addRowBtn" class="btn btn-sm btn-primary mb-3">+</button>
+    <table id="sidebarTable" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Text</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
   </div>
 
   <!-- Main Section -->
@@ -186,11 +225,14 @@
       }
     });
 
+    // Remove or comment out the following block
+    /*
     // Open modal panel
     document.getElementById('openModalButton').addEventListener('click', function () {
       document.getElementById('modalPanel').style.display = 'block';
       document.getElementById('modalOverlay').style.display = 'block';
     });
+    */
 
     // Close modal panel with button
     document.getElementById('closeModalButton').addEventListener('click', function () {
@@ -259,6 +301,65 @@
       document.removeEventListener('touchmove', resizePanelTouch);
       document.removeEventListener('touchend', stopResizing);
     }
+
+    // Move DataTable initialization outside of document.ready
+    var table;
+
+    // Initialize DataTable after the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log("DOMContentLoaded");
+      console.log("Add button exists:", $('#addRowBtn').length > 0);
+
+      table = $('#sidebarTable').DataTable({
+        paging: false,
+        searching: false,
+        info: false,
+        columns: [
+          {
+            data: null,
+            render: function(data, type, row) {
+              return '<button class="deleteBtn">🗑️</button>';
+            },
+            orderable: false
+          },
+          { data: 'text' }
+        ],
+        select: {
+          style: 'single'
+        },
+        order: [], // Disable initial sorting
+      });
+      console.log("DataTable initialized:", table);
+
+      // Add new row at the top
+      $('#addRowBtn').on('click', function() {
+        console.log("Add button clicked");
+        table.row.add({text: ''}).draw(false);
+        table.order([1, 'asc']).draw(false);
+
+        // Scroll to the top of the table
+        $('#sidebarTable').parent().scrollTop(0);
+      });
+
+      // Delete row
+      $('#sidebarTable tbody').on('click', '.deleteBtn', function() {
+        table.row($(this).parents('tr')).remove().draw();
+      });
+
+      // Make second column editable
+      $('#sidebarTable tbody').on('dblclick', 'td:nth-child(2)', function() {
+        var cell = table.cell(this);
+        var data = cell.data();
+        $(this).html('<input type="text" value="' + data + '">');
+        $('input', this).focus();
+      });
+
+      $('#sidebarTable tbody').on('blur', 'input', function() {
+        var cell = table.cell($(this).parent());
+        cell.data($(this).val()).draw();
+      });
+    });
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
