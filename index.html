@@ -310,6 +310,8 @@
       console.log("DOMContentLoaded");
       console.log("Add button exists:", $('#addRowBtn').length > 0);
 
+      var rowCounter = 0;  // Counter to keep track of row creation order
+
       table = $('#sidebarTable').DataTable({
         paging: false,
         searching: false,
@@ -322,20 +324,21 @@
             },
             orderable: false
           },
-          { data: 'text' }
+          { data: 'text' },
+          { data: 'order', visible: false }  // Hidden column for ordering
         ],
         select: {
           style: 'single'
         },
-        order: [], // Disable initial sorting
+        order: [[2, 'desc']]  // Sort by the hidden 'order' column
       });
       console.log("DataTable initialized:", table);
 
       // Add new row at the top
       $('#addRowBtn').on('click', function() {
         console.log("Add button clicked");
-        table.row.add({text: ''}).draw(false);
-        table.order([1, 'asc']).draw(false);
+        rowCounter++;
+        table.row.add({text: '', order: rowCounter}).draw(false);
 
         // Scroll to the top of the table
         $('#sidebarTable').parent().scrollTop(0);
