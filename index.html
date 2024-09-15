@@ -357,10 +357,15 @@
         $('input', this).focus();
       });
 
-      $('#sidebarTable tbody').on('blur', 'input', function() {
-        var cell = table.cell($(this).parent());
-        cell.data($(this).val()).draw();
+      // Handle blur and Enter key press for editing
+      $('#sidebarTable tbody').on('blur keyup', 'input', function(e) {
+        if (e.type === 'blur' || (e.type === 'keyup' && e.key === 'Enter')) {
+          var cell = table.cell($(this).parent());
+          cell.data($(this).val()).draw();
+        }
       });
+
+      // ... rest of the existing code ...
     });
 
   </script>
