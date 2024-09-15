@@ -225,15 +225,6 @@
       }
     });
 
-    // Remove or comment out the following block
-    /*
-    // Open modal panel
-    document.getElementById('openModalButton').addEventListener('click', function () {
-      document.getElementById('modalPanel').style.display = 'block';
-      document.getElementById('modalOverlay').style.display = 'block';
-    });
-    */
-
     // Close modal panel with button
     document.getElementById('closeModalButton').addEventListener('click', function () {
       document.getElementById('modalPanel').style.display = 'none';
@@ -349,13 +340,46 @@
         table.row($(this).parents('tr')).remove().draw();
       });
 
-      // Make second column editable
-      $('#sidebarTable tbody').on('dblclick', 'td:nth-child(2)', function() {
-        var cell = table.cell(this);
-        var data = cell.data();
-        $(this).html('<input type="text" value="' + data + '">');
-        $('input', this).focus();
+      var lastTap = 0;
+      var tapTimeout;
+      var touchStartTime;
+      var touchStartX;
+      var touchStartY;
+
+      // Make second column editable (for desktop and mobile)
+      $('#sidebarTable tbody').on('dblclick touchstart touchend', 'td:nth-child(2)', function(e) {
+        if (e.type === 'touchstart') {
+          touchStartTime = new Date().getTime();
+          var touch = e.originalEvent.touches[0];
+          touchStartX = touch.pageX;
+          touchStartY = touch.pageY;
+        } else if (e.type === 'touchend') {
+          var currentTime = new Date().getTime();
+          var tapLength = currentTime - touchStartTime;
+          var touch = e.originalEvent.changedTouches[0];
+          var touchEndX = touch.pageX;
+          var touchEndY = touch.pageY;
+
+          // Check if the touch was a tap (short duration and small movement)
+          if (tapLength < 500 && Math.abs(touchEndX - touchStartX) < 10 && Math.abs(touchEndY - touchStartY) < 10) {
+            if (currentTime - lastTap < 300) {
+              // Double tap detected
+              enterEditMode(this);
+              e.preventDefault();
+            }
+            lastTap = currentTime;
+          }
+        } else if (e.type === 'dblclick') {
+          enterEditMode(this);
+        }
       });
+
+      function enterEditMode(element) {
+        var cell = table.cell(element);
+        var data = cell.data();
+        $(element).html('<input type="text" value="' + data + '">');
+        $('input', element).focus();
+      }
 
       // Handle blur and Enter key press for editing
       $('#sidebarTable tbody').on('blur keyup', 'input', function(e) {
