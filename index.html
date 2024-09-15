@@ -147,6 +147,16 @@
       border: none;
       cursor: pointer;
     }
+    /* Add these new styles */
+    #sidebar table.dataTable tbody td {
+      text-align: left;
+    }
+    #sidebar table.dataTable tbody td input {
+      width: 100%;
+      background-color: #343a40;
+      color: white;
+      border: 1px solid #6c757d;
+    }
   </style>
 </head>
 <body>
@@ -325,11 +335,14 @@
       });
       console.log("DataTable initialized:", table);
 
-      // Add new row at the top
+      // Add new row at the top and enter edit mode
       $('#addRowBtn').on('click', function() {
         console.log("Add button clicked");
         rowCounter++;
-        table.row.add({text: '', order: rowCounter}).draw(false);
+        var newRow = table.row.add({text: '', order: rowCounter}).draw(false).node();
+
+        // Enter edit mode for the new row
+        enterEditMode($(newRow).find('td:nth-child(2)')[0]);
 
         // Scroll to the top of the table
         $('#sidebarTable').parent().scrollTop(0);
