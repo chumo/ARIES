@@ -30,7 +30,7 @@
     }
 
     #sidebar button {
-      margin: 20px;
+      margin: 0px;
     }
 
     /* Styles for the modal panel */
@@ -136,6 +136,8 @@
     }
     #sidebar table.dataTable tbody tr.selected {
       background-color: #007bff;
+      height: auto !important; /* Override any fixed height */
+      min-height: 0 !important; /* Allow rows to be as small as needed */
     }
     #addRowBtn {
       margin-top: 10px;
@@ -147,15 +149,30 @@
       border: none;
       cursor: pointer;
     }
-    /* Add these new styles */
+    /* Modify these styles */
     #sidebar table.dataTable tbody td {
       text-align: left;
+      padding: 4px 8px; /* Reduce padding */
+      line-height: 1.2; /* Reduce line height */
     }
     #sidebar table.dataTable tbody td input {
       width: 100%;
       background-color: #343a40;
       color: white;
       border: 1px solid #6c757d;
+      padding: 2px 4px; /* Reduce input padding */
+      height: 24px; /* Set a fixed height for inputs */
+    }
+    /* Add these new styles */
+    #sidebar table.dataTable {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+    #sidebar table.dataTable thead th {
+      padding: 2px 2px; /* Reduce header padding */
+    }
+    #sidebar .dataTables_scrollBody {
+      max-height: calc(100vh - 150px); /* Adjust based on your layout */
     }
   </style>
 </head>
