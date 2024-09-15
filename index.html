@@ -29,10 +29,6 @@
       left: 0;
     }
 
-    #sidebar button {
-      margin: 0px;
-    }
-
     /* Styles for the modal panel */
     #modalPanel {
       display: none;
@@ -136,11 +132,10 @@
     }
     #sidebar table.dataTable tbody tr.selected {
       background-color: #007bff;
-      height: auto !important; /* Override any fixed height */
-      min-height: 0 !important; /* Allow rows to be as small as needed */
     }
     #addRowBtn {
       margin-top: 10px;
+      margin-left: 50px;
     }
     .deleteBtn {
       padding: 2px 5px;
@@ -198,12 +193,12 @@
 
   <!-- Left Sidebar -->
   <div id="sidebar" class="bg-dark">
-    <button id="addRowBtn" class="btn btn-sm btn-primary mb-3">+</button>
+    <button id="addRowBtn" class="btn btn-sm btn-primary">Add Project</button>
     <table id="sidebarTable" class="display" style="width:100%">
       <thead>
         <tr>
           <th></th>
-          <th>Text</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -340,7 +335,8 @@
             render: function(data, type, row) {
               return '<button class="deleteBtn">🗑️</button>';
             },
-            orderable: false
+            orderable: false,
+            width: '30px'  // Set the width of the first column to 40px
           },
           { data: 'text' },
           { data: 'order', visible: false }  // Hidden column for ordering
