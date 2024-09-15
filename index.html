@@ -344,7 +344,10 @@
         select: {
           style: 'single'
         },
-        order: [[2, 'desc']]  // Sort by the hidden 'order' column
+        order: [[2, 'desc']],  // Sort by the hidden 'order' column
+        language: {
+          emptyTable: "No projects so far..."
+        },
       });
       console.log("DataTable initialized:", table);
 
