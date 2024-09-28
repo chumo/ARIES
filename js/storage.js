@@ -45,10 +45,10 @@ class LocalStorageManager {
       }
     }
 
-    // Set baudrate in local storage
-    setBaudrate(projectName, baudrate) {
+    // Set field in an item from local storage
+    setField(field, value, projectName) {
       const project = this.getItem(projectName);
-      project.baudrate = baudrate;
+      project[field] = value;
       this.setItem(projectName, project);
     }
 

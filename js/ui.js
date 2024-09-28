@@ -9,7 +9,7 @@ function setBaudrate(value) {
     // set baudrate in local storage
     let projectName = getSelectedProject();
     if (projectName) {
-        storage.setBaudrate(projectName, value);
+        storage.setField('baudrate', value, projectName);
     }
   }
 
