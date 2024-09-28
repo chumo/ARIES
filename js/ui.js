@@ -162,11 +162,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let newRow = addRow('', createdAt);
         $(newRow).find('td:nth-child(2)').trigger('dblclick');
         $('#projectInfo').val('');
+        switchOff();
     });
 
     function addRow(name, createdAt) {
         let newRow = table.row.add({name: name, createdAt: createdAt}).draw().node();
-        console.log('new row created');
         // $(newRow).on('select', function () {
         //     console.log('new row selected: ');//, table.row(newRow).data()
         // });
@@ -191,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (newText === '') {
                 table.row($(this).closest('tr')).remove().draw();
                 storage.removeItem(currentText);
+                ensureRowSelection();
             } else if (existingProjects.includes(newText) & currentText !== newText){
                 // if the name already exists, show alert and delete the row
                 alert('A project with the same name already exists.');
@@ -239,6 +240,7 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#projectInfo').val(project.info);
             // set baudrate
             setBaudrate(project.baudrate);
+            switchOff();
         }
     });
 
@@ -298,3 +300,6 @@ function getSelectedProject(){
     }
 }
 
+function switchOff() {
+    $('#switch').prop('checked', false);
+}
