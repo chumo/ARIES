@@ -9,6 +9,7 @@
     font-size: 20px;
     font-weight: 100;
     margin-top: 5px;
+    line-height: 0.75; /* Reduced interline distance */
 }
 
 .nanum {
@@ -277,4 +278,5 @@ main {
 
 #projectInfo {
     font-size: 14px;
+    background-color: aliceblue;
 }
