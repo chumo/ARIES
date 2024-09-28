@@ -206,6 +206,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         newText,
                         {createdAt:createdAt, data:[], baudrate: getBaudrate(), info: ''}
                     );
+                    $('#projectInfo').val('');
                 } else if (currentText !== newText) {
                     // the project already exists, so we just rename it
                     storage.renameKey(currentText, newText);
