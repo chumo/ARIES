@@ -161,6 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // let newRow = table.row.add({name: '', createdAt: createdAt}).draw().node();
         let newRow = addRow('', createdAt);
         $(newRow).find('td:nth-child(2)').trigger('dblclick');
+        $('#projectInfo').val('');
     });
 
     function addRow(name, createdAt) {
@@ -190,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (newText === '') {
                 table.row($(this).closest('tr')).remove().draw();
                 storage.removeItem(currentText);
-            } else if (existingProjects.includes(newText)){
+            } else if (existingProjects.includes(newText) & currentText !== newText){
                 // if the name already exists, show alert and delete the row
                 alert('A project with the same name already exists.');
                 $(this).trigger('dblclick');
@@ -206,7 +207,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         newText,
                         {createdAt:createdAt, data:[], baudrate: getBaudrate(), info: ''}
                     );
-                    $('#projectInfo').val('');
                 } else if (currentText !== newText) {
                     // the project already exists, so we just rename it
                     storage.renameKey(currentText, newText);
@@ -223,12 +223,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    // event to handler project selection
+    // event to avoid deselection
     $('#sidebarTable').on('click', '.editable', function () {
         let row = table.row($(this).closest('tr'));
-        let projectName = row.data().name;
-        if (projectName === getSelectedProject()) {return;}
-
         row.select();
     });
 
@@ -249,18 +246,10 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#sidebarTable').on('click', '.delete-btn', function (e, dt, type, cell) {
         let row = table.row($(this).closest('tr'));
         let storageKey = row.data().name;
-        // let wasSelected = row.node().classList.contains('selected');
         row.remove().draw();
-        // if (wasSelected && table.rows().count() > 0) {
-        //     table.row(0).select();
-        // }
         // delete the corresponding local storage item
         storage.removeItem(storageKey);
-    });
-
-    // do nothing if a deselection is triggered
-    table.on('deselect', function (e, dt, type, cell) {
-        e.preventDefault();
+        ensureRowSelection();
     });
 
     // Ensure a row is always selected if there are rows
@@ -271,20 +260,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Call after any change to the table
-    table.on('draw', ensureRowSelection);
-
-    // Initial selection
-    ensureRowSelection();
+    // table.on('draw', ensureRowSelection);
 
     // Populate table with data from local storage
     populateTableFromLocalStorage();
 
     // Prevent deselection
-    table.on('user-select', function (e, dt, type, cell, originalEvent) {
-        if (table.rows({ selected: true }).count() === 0) {
-            e.preventDefault();
-        }
-    });
+    // table.on('user-select', function (e, dt, type, cell, originalEvent) {
+    //     if (table.rows({ selected: true }).count() === 0) {
+    //         e.preventDefault();
+    //     }
+    // });
 
     // Add this new function to populate the table from local storage
     function populateTableFromLocalStorage() {
@@ -296,6 +282,9 @@ document.addEventListener('DOMContentLoaded', function () {
             addRow(key, value.createdAt)
         }
     }
+
+    // In the beginning, at least one project is selected unless there is none
+    ensureRowSelection();
 
 });
 
