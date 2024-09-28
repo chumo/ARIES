@@ -164,18 +164,23 @@ document.addEventListener('DOMContentLoaded', function () {
         // first, make sure to select the row
         table.row($(this).closest('tr')).select();
 
-        var cell = table.cell(this);
-        var currentText = $(this).text();
+        let cell = table.cell(this);
+        let currentText = $(this).text();
         $(this).html('<input type="text" class="form-control edit-input" value="' + currentText + '">');
-        var input = $(this).find('input');
+        let input = $(this).find('input');
         input.focus();
 
         input.on('blur', function () {
             var newText = $(this).val();
+            let existingProjects = table.data().toArray().map(d => d.name);
             // if newText is empty, delete the row
             if (newText === '') {
                 table.row($(this).closest('tr')).remove().draw();
                 storage.removeItem(currentText);
+            } else if (existingProjects.includes(newText)){
+                // if the name already exists, show alert and delete the row
+                alert('A project with the same name already exists.');
+                $(this).trigger('dblclick');
             } else {
                 cell.data(newText).draw();
                 // log the content of the row
