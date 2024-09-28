@@ -13,6 +13,14 @@ function setBaudrate(value) {
     }
   }
 
+function setInfo(value) {
+    // set info in local storage
+    let projectName = getSelectedProject();
+    if (projectName) {
+        storage.setField('info', value, projectName);
+    }
+  }
+
 function getBaudrate() {
     return parseInt($('#dropdownMenuButton').text().split(' ')[1]);
   }
@@ -101,6 +109,11 @@ function stopResizing() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+
+    // store info on each keystroke
+    $('#projectInfo').on('input', function() {
+        setInfo($(this).val());
+    });
 
     // create the table
     var table = $('#sidebarTable').DataTable({
@@ -191,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // we come from just creating a project
                     storage.setItem(
                         newText,
-                        {createdAt:createdAt, data:[], baudrate: getBaudrate()}
+                        {createdAt:createdAt, data:[], baudrate: getBaudrate(), info: ''}
                     );
                 } else if (currentText !== newText) {
                     // the project already exists, so we just rename it
@@ -223,8 +236,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let projectName = getSelectedProject();
         if (projectName !== ''){
             // set corresponding baudrate
-            let baudrate = storage.getItem(projectName).baudrate;
-            setBaudrate(baudrate);
+            let project = storage.getItem(projectName);
+            // load info into text area
+            $('#projectInfo').val(project.info);
+            // set baudrate
+            setBaudrate(project.baudrate);
         }
     });
 
@@ -291,3 +307,4 @@ function getSelectedProject(){
         return null;
     }
 }
+
