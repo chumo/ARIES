@@ -1,7 +1,5 @@
 // Inspired by https://web.dev/serial/
 
-let SAMPLING_MILISECONDS = 1000;
-
 let points = [];
 let lineBuffer = '';
 let latestValue = '';
@@ -41,19 +39,15 @@ async function getReader() {
 
     appendStream = new WritableStream({
       write(chunk) {
-        lineBuffer += chunk;
 
+        lineBuffer += chunk;
         let lines = lineBuffer.split('\r\n');
-        // console.log(lineBuffer);
+
         if (lines.length > 1) {
           lineBuffer = lines.pop();
-        //   latestValue = parseInt(lines.pop().trim());
-        // console.log(latestValue);
           latestValue=lines.pop();
-          // if (!latestValue.includes('-- READY --')) {
-            // console.log(latestValue);
-          // }
         }
+
       }
     });
 
@@ -64,37 +58,24 @@ async function getReader() {
 }
 
 // FUNCTION TO FETCH PERIODICALLY AND PLOT THE latestValue
-function acquire(elapsed) {
-    let checked = document.getElementById("switch").checked;
+function acquire() {
+    let checked = $('#switch').prop('checked');
     if (checked) {
         // we cannot read data if it is not connected
         if (!isConnected()){
             alert('You must CONNECT TO SERIAL first.')
             $('#switch').prop('checked', false);
         } else {
-          let pressureMPa = latestValue;
-          points.push(
-              {
-                  'time [s]': elapsed / 1000,
-                  'serial read': latestValue,
-                  'pressure [MPa]': pressureMPa,
-                  'pressure [kPa]': pressureMPa * 1000,
-                  'pressure [psi]': pressureMPa * 145.038,
-              }
-          );
-          plotPoints(points);
+            points.push(parseValue(latestValue));
+            // plotPoints(points);
         }
     } else if (!checked && points.length > 1) {
-        if (points.slice(-1)[0]['serial read'] != undefined) {
-            points.push(
-                {
-                    'time [s]': elapsed / 1000,
-                    'serial read': undefined,
-                    'pressure [MPa]': undefined,
-                    'pressure [kPa]': undefined,
-                    'pressure [psi]': undefined,
-                }
-            );
+        // previous point without the `ts` key
+        let {ts, ...previous} = points.slice(-1)[0];
+        let anyDefined = Object.values(previous).some(d => d !== undefined);
+        if (anyDefined) {
+            // only if any value is not undefined
+            points.push({'ts': Date.now()});
         }
     }
 }
@@ -116,6 +97,41 @@ function setIntervalValue() {
 
   interval = setInterval(acquire, sampling);
 
+}
+
+// Parse reading values
+function parseValue(input) {
+  // Example usage (a key named "ts" for timestamp will be added):
+  // console.log(parseToJSON("A:1.5,B:2.3")); // { A: 1.5, B: 2.3 }
+  // console.log(parseToJSON("A:1.5 B:2.3")); // { A: 1.5, B: 2.3 }
+  // console.log(parseToJSON("A=1.5,B=2.3")); // { A: 1.5, B: 2.3 }
+  // console.log(parseToJSON("A=1.5 B=2.3")); // { A: 1.5, B: 2.3 }
+  // console.log(parseToJSON("1.1,2.2"));     // { key1: 1.1, key2: 2.2 }
+  // console.log(parseToJSON("1.1 2.2"));     // { key1: 1.1, key2: 2.2 }
+  const result = {};
+  const pairs = input.split(/[, ]+/); // Split by comma or space
+
+  pairs.forEach(pair => {
+      const [key, value] = pair.split(/[:=]/); // Split by : or =
+
+      if (key && value) {
+          // If both key and value are present, trim and assign as float
+          result[key.trim()] = parseFloat(value.trim());
+      } else if (value) {
+          // If only value is present, create a default key
+          const defaultKey = `key${Object.keys(result).length + 1}`;
+          result[defaultKey] = parseFloat(value.trim());
+      } else if (key) {
+          // If only key is present (in case of default keys)
+          const defaultKey = `key${Object.keys(result).length + 1}`;
+          result[defaultKey] = parseFloat(key.trim());
+      }
+  });
+
+  // add the current Unix epoch in milliseconds
+  result['ts'] = Date.now();
+
+  return result;
 }
 
 // start with default interval
