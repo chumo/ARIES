@@ -16,6 +16,14 @@ function setInfo(value) {
     }
   }
 
+function setData(value) {
+    // set info in local storage
+    let projectName = getSelectedProject();
+    if (projectName) {
+        storage.setField('data', value, projectName);
+    }
+  }
+
 function getBaudrate() {
     return parseInt($('#dropdownBaudRate').text().split(' ')[1]);
   }
@@ -157,6 +165,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let newRow = addRow('', createdAt);
         $(newRow).find('td:nth-child(2)').trigger('dblclick');
         $('#projectInfo').val('');
+        points = [];
         switchOff();
     });
 
@@ -232,6 +241,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // load info into text area
             let project = storage.getItem(projectName);
             $('#projectInfo').val(project.info);
+            // load points from storage
+            points = project.data;
             // switch off reading
             switchOff();
         }

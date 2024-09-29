@@ -66,7 +66,7 @@ function acquire() {
             alert('You must CONNECT TO SERIAL first.')
             $('#switch').prop('checked', false);
         } else {
-            points.push(parseValue(latestValue));
+          addPoint(parseValue(latestValue));
             // plotPoints(points);
         }
     } else if (!checked && points.length > 1) {
@@ -75,9 +75,14 @@ function acquire() {
         let anyDefined = Object.values(previous).some(d => d !== undefined);
         if (anyDefined) {
             // only if any value is not undefined
-            points.push({'ts': Date.now()});
+            addPoint({'ts': Date.now()});
         }
     }
+}
+
+function addPoint(point){
+  points.push(point);
+  setData(points);
 }
 
 // Function to restart the interval with a new period
