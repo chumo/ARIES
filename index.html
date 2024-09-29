@@ -94,9 +94,14 @@
       <button type="button" id="connectButton" class="btn btn-primary" onclick="getReader();">CONNECT TO SERIAL</button>
     </div>
 
-    <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" role="switch" id="switch">
-      <label class="form-check-label" for="switch" id="switchLabel">Read</label>
+
+    <div class="panelDiv d-flex align-items-center">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="switch">
+      </div>
+      <span class="label">Read every</span>
+      <input type="number" id="intervalInput" class="form-control form-control-sm" value="1">
+      <span class="label">seconds</span>
     </div>
 
     <div class="panelDiv">
@@ -153,10 +158,10 @@
 
   <!-- Scripts -->
   <script src="js/storage.js"></script>
+  <script src="js/acquisition.js"></script>
   <script src="js/ui.js"></script>
   <!-- <script src="js/plots.js"></script>
   <script src="js/persist.js"></script> -->
-  <script src="js/acquisition.js"></script>
 
 </body>
 

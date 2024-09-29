@@ -8,6 +8,8 @@ let latestValue = '';
 
 let appendStream = null;
 
+let interval = null;
+
 function isConnected(){
   return appendStream instanceof WritableStream;
 }
@@ -97,7 +99,24 @@ function acquire(elapsed) {
     }
 }
 
-// EXECUTE THE ACQUISITION IN REGULAR INTERVALS
-const interval = d3.interval(acquire, SAMPLING_MILISECONDS);
+// Function to restart the interval with a new period
+function setIntervalValue() {
+  let sampling = parseFloat($('#intervalInput').val())*1000
 
+  if (isNaN(sampling) || sampling === 0) {
+      console.error('A zero interval time is not possible. Back to default.');
+      $('#intervalInput').val(1);
+      sampling = 1000;
+  }
 
+  // clear interval if it already exists
+  if (interval){
+    clearInterval(interval);
+  }
+
+  interval = setInterval(acquire, sampling);
+
+}
+
+// start with default interval
+setIntervalValue();

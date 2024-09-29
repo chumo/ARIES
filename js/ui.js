@@ -296,3 +296,5 @@ function getSelectedProject(){
 function switchOff() {
     $('#switch').prop('checked', false);
 }
+
+$('#intervalInput').on('change', setIntervalValue);

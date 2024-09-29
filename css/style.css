@@ -24,6 +24,7 @@
 
 #connectButton {
     width: 100%;
+    height: 60px;
 }
 
 #digitDisplay {
@@ -255,15 +256,20 @@ main {
     margin-right: 5px;
     padding-left: 5px;
 }
-#switchLabel {
-    font-size: 12px;
+.label {
+    font-size: 14px;
     color: white;
+    padding-left: 5px;
+    line-height: 1.2; /* Reduced interline distance */
 }
-#dropdownMenuButton {
+#intervalInput {
+    width: 50%;
+}
+#dropdownBaudRate {
     width: 100%;
 }
 .form-switch {
-    padding-left: 10px;
+    padding-left: 0px;
     padding-top: 2px;
 }
 
