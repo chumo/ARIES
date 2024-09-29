@@ -51,7 +51,6 @@
     left: -250px;
     background-color: #343a40;
     transition: all 0.3s;
-    padding-top: 5px;
 }
 
 #sidebar.show {
@@ -284,7 +283,7 @@ main {
 }
 
 .panelDiv {
-    margin: 10px;
+    margin: 0px 10px 10px;
 }
 
 #projectInfo {
