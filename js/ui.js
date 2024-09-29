@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function populateTableFromLocalStorage() {
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
-            const value = JSON.parse(localStorage.getItem(key));
+            const value = storage.getItem(key);
 
             // Add a new row to the table and use the createdAt as the order
             addRow(key, value.createdAt)
