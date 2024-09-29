@@ -2,7 +2,7 @@
 const storage = new LocalStorageManager();
 
 function setBaudrate(value) {
-    $('#dropdownMenuButton').text('baudrate: ' + value);
+    $('#dropdownBaudRate').text('baudrate: ' + value);
     // add the class .active to the selected baudrate
     $('#baudrateDropdown .dropdown-item').removeClass('active');
     $('#baudRate' + value).addClass('active');
@@ -22,7 +22,7 @@ function setInfo(value) {
   }
 
 function getBaudrate() {
-    return parseInt($('#dropdownMenuButton').text().split(' ')[1]);
+    return parseInt($('#dropdownBaudRate').text().split(' ')[1]);
   }
 
 // Toggle sidebar
