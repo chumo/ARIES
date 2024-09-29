@@ -117,6 +117,8 @@ main {
 }
 
 #scrollablePanel {
+    font-family: 'Ubuntu Mono', monospace;
+    line-height: 0.1;
     position: fixed;
     bottom: 0;
     height: 150px;
@@ -132,6 +134,10 @@ main {
     margin-left: 250px;
     transition: margin-left 0.3s;
     /* Smooth transition for margin change */
+}
+
+#scrollablePanel span {
+    color: blue;
 }
 
 /* Header alignment */
@@ -154,6 +160,10 @@ main {
 .navbar-logo {
     display: flex;
     align-items: center;
+}
+
+#sidebar {
+    overflow-y: auto;
 }
 
 /* Styles for the DataTable in sidebar */

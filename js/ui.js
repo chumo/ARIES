@@ -160,13 +160,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // New row creation
     $('#addRowBtn').on('click', function () {
+        switchOff();
         let createdAt = new Date().toISOString();
         // let newRow = table.row.add({name: '', createdAt: createdAt}).draw().node();
         let newRow = addRow('', createdAt);
         $(newRow).find('td:nth-child(2)').trigger('dblclick');
         $('#projectInfo').val('');
         points = [];
-        switchOff();
+        printPoints();
     });
 
     function addRow(name, createdAt) {
@@ -238,13 +239,15 @@ document.addEventListener('DOMContentLoaded', function () {
     table.on('select', function () {
         let projectName = getSelectedProject();
         if (projectName !== ''){
+            // switch off reading
+            switchOff();
             // load info into text area
             let project = storage.getItem(projectName);
             $('#projectInfo').val(project.info);
             // load points from storage
             points = project.data;
-            // switch off reading
-            switchOff();
+            // display data in the terminal
+            printPoints();
         }
     });
 

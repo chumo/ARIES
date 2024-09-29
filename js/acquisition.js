@@ -8,6 +8,8 @@ let appendStream = null;
 
 let interval = null;
 
+let dtFormat = d3.timeFormat("%Y-%m-%d %H:%M:%S.%L");
+
 function isConnected(){
   return appendStream instanceof WritableStream;
 }
@@ -83,6 +85,22 @@ function acquire() {
 function addPoint(point){
   points.push(point);
   setData(points);
+  printPoints();
+}
+
+function printPoints(){
+  // display data in the terminal
+  d3.select('#scrollablePanel')
+    .selectAll('p')
+    .data(points)
+    .join('p')
+    .html(d => `<span>${dtFormat(new Date(d.ts))} ></span> ${d.raw}`);
+
+  // always scroll down so that latest value is visible at the bottom
+  $('#scrollablePanel').prop(
+    'scrollTop',
+    $('#scrollablePanel').prop('scrollHeight')
+  );
 }
 
 // Function to restart the interval with a new period
@@ -135,6 +153,8 @@ function parseValue(input) {
 
   // add the current Unix epoch in milliseconds
   result['ts'] = Date.now();
+  // add the raw data for reference
+  result['raw'] = input
 
   return result;
 }
