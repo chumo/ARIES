@@ -6,11 +6,6 @@ function setBaudrate(value) {
     // add the class .active to the selected baudrate
     $('#baudrateDropdown .dropdown-item').removeClass('active');
     $('#baudRate' + value).addClass('active');
-    // set baudrate in local storage
-    let projectName = getSelectedProject();
-    if (projectName) {
-        storage.setField('baudrate', value, projectName);
-    }
   }
 
 function setInfo(value) {
@@ -206,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // we come from just creating a project
                     storage.setItem(
                         newText,
-                        {createdAt:createdAt, data:[], baudrate: getBaudrate(), info: ''}
+                        {createdAt:createdAt, data:[], info: ''}
                     );
                 } else if (currentText !== newText) {
                     // the project already exists, so we just rename it
@@ -234,12 +229,10 @@ document.addEventListener('DOMContentLoaded', function () {
     table.on('select', function () {
         let projectName = getSelectedProject();
         if (projectName !== ''){
-            // set corresponding baudrate
-            let project = storage.getItem(projectName);
             // load info into text area
+            let project = storage.getItem(projectName);
             $('#projectInfo').val(project.info);
-            // set baudrate
-            setBaudrate(project.baudrate);
+            // switch off reading
             switchOff();
         }
     });
