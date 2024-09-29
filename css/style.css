@@ -22,9 +22,8 @@
     top: 4px;
 }
 
-.myButton {
-    padding: 0px 5px 0px 5px;
-    margin-left: 10px;
+#connectButton {
+    width: 100%;
 }
 
 #digitDisplay {
@@ -251,10 +250,6 @@ main {
     height: 100%;
 }
 
-#baudrateDropdown {
-    margin-left: 10px;
-}
-
 #switch {
     margin-left: 5px;
     margin-right: 5px;
@@ -265,7 +260,7 @@ main {
     color: white;
 }
 #dropdownMenuButton {
-    width: 140px;
+    width: 100%;
 }
 .form-switch {
     padding-left: 10px;
