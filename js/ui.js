@@ -44,16 +44,24 @@ document.getElementById('burgerButton').addEventListener('click', function () {
 });
 
 // Close modal panel with button
-document.getElementById('closeModalButton').addEventListener('click', function () {
-    document.getElementById('modalPanel').style.display = 'none';
-    document.getElementById('modalOverlay').style.display = 'none';
+$('#closeModalButton').on('click', function () {
+    $('#modalPanel').hide();
+    $('#modalOverlay').hide();
 });
 
 // Close modal panel by clicking outside
-document.getElementById('modalOverlay').addEventListener('click', function () {
-    document.getElementById('modalPanel').style.display = 'none';
-    document.getElementById('modalOverlay').style.display = 'none';
+$('#modalOverlay').on('click', function () {
+    $('#modalPanel').hide();
+    $('#modalOverlay').hide();
 });
+
+function showAlert(title, message) {
+    $('#modalPanel h4').text(title);
+    $('#modalPanel p').text(message);
+    $('#modalPanel').show();
+    $('#modalOverlay').show();
+    $('#modalPanel button').focus();
+}
 
 // Resizing logic for both desktop and mobile
 const scrollablePanel = document.getElementById('scrollablePanel');
@@ -199,8 +207,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 ensureRowSelection();
             } else if (existingProjects.includes(newText) & currentText !== newText){
                 // if the name already exists, show alert and delete the row
-                alert('A project with the same name already exists.');
                 $(this).trigger('dblclick');
+                showAlert('Duplicate Names', 'A project with the same name already exists. Please use a different name.');
             } else {
                 cell.data(newText).draw();
                 // log the content of the row

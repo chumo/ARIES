@@ -65,8 +65,8 @@ function acquire() {
     if (checked) {
         // we cannot read data if it is not connected
         if (!isConnected()){
-            alert('You must CONNECT TO SERIAL first.')
             $('#switch').prop('checked', false);
+            showAlert('Not Connected', 'You must CONNECT TO SERIAL first.');
         } else {
           addPoint(parseValue(latestValue));
             // plotPoints(points);
