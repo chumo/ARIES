@@ -72,6 +72,10 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+#modalPanel h4 {
+    color: blue;
+}
+
 /* Overlay to close modal */
 #modalOverlay {
     display: none;
