@@ -64,6 +64,10 @@ function plotPoints() {
       },
       hovermode: 'x',
       showlegend: true,
+      legend: {
+        y: '0.9',
+        yanchor: 'top',
+      },
       margin: {
         t: 10,
         l: 50,
