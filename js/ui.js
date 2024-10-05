@@ -41,6 +41,17 @@ document.getElementById('burgerButton').addEventListener('click', function () {
     } else {
         scrollablePanel.style.marginLeft = '0';
     }
+
+    // Adjust plot size based on sidebar visibility
+    if (sidebar.classList.contains('show')) {
+        Plotly.relayout('plotId', {
+            width: window.innerWidth - 250 - 20,
+        });
+    } else {
+        Plotly.relayout('plotId', {
+            width: window.innerWidth - 20,
+        });
+    }
 });
 
 // Close modal panel with button
