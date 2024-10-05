@@ -32,95 +32,42 @@ function initPlot() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-function plotPoints(points) {
-    let limitMin = 0.6894745;
-    let limitMax = 3 * limitMin;
-    let displayText = '';
+function plotPoints() {
 
-    if (points.length > 0) {
-
-      let lastMeasure = points.slice(-1)[0][selectedUnits];
-      if (lastMeasure == undefined) {
-        // The last point can be undefined if the acquisition is stopped
-        lastMeasure = points.slice(-2)[0][selectedUnits];
-      }
-
-      switch(selectedUnits) {
-        case 'pressure [MPa]':
-          displayText = `${lastMeasure.toFixed(5)} MPa`;
-          break;
-        case 'pressure [kPa]':
-          limitMin *= 1000;
-          limitMax *= 1000;
-          displayText = `${lastMeasure.toFixed(2)} kPa`;
-          break;
-        case 'pressure [psi]':
-          limitMin *= 145.038;
-          limitMax *= 145.038;
-          displayText = `${lastMeasure.toFixed(3)} psi`;
-          break;
-        case 'serial read':
-          limitMin = getPressureMPa.invert(limitMin);
-          limitMax = getPressureMPa.invert(limitMax);
-          displayText = `${lastMeasure.toFixed(0)}`;
-        default:
-          break;
-      }
-
-    }
-
-    // Update digit display
-    d3.select("#digitDisplay").text(displayText);
+    // Retrieve subset of points without the `ts` and the `raw` keys
+    let sensors = _.without(_.uniq(_.flatten(_.map(points, _.keys))), 'ts', 'raw');
 
     // Update plot
     var data = [];
-    data.push({
-      x: points.map(d => d['time [s]']),
-      y: points.map(d => d[selectedUnits]),
-      type: 'scatter',
-      mode: 'lines+markers',
-      fill: 'tozeroy',
-      showlegend: false,
-      name: '',
+    sensors.forEach(key => {
+      data.push({
+        x: points.map(d => new Date(d.ts)),
+        y: points.map(d => d[key]),
+        type: 'scatter',
+        mode: 'lines+markers',
+        fill: 'tozeroy',
+        name: key,
+      });
     });
-    let checked = document.getElementById("switchLimits").checked;
-    if (checked && points.length > 0) {
-      data.push({
-        x: [points[0]['time [s]'], points.slice(-1)[0]['time [s]']],
-        y: [limitMin, limitMin],
-        type: 'scatter',
-        marker: {color: '#ff7f0e'},
-        line: {width: 2},
-        mode: 'lines',
-        name: 'MIN',
-      });
-      data.push({
-        x: [points[0]['time [s]'], points.slice(-1)[0]['time [s]']],
-        y: [limitMax, limitMax],
-        type: 'scatter',
-        marker: {color: '#ff7f0e'},
-        line: {width: 2},
-        mode: 'lines',
-        name: 'MAX',
-      });
-    }
 
     let layout = {
-      title: 'Analog Read vs Time',
       xaxis: {
-        title: 'time [s]',
+        title: 'time',
         showgrid: false,
         zeroline: false,
         uirevision: true,
       },
       yaxis: {
-        title: selectedUnits,
+        title: 'value',
         showline: false,
         uirevision: true,
       },
       hovermode: 'x',
-      showlegend: false,
-      shapes: [getVLine(clicked[0]), getVLine(clicked[1])],
+      showlegend: true,
+      margin: {
+        t: 10,
+        l: 50,
+      },
     };
 
     Plotly.react(
