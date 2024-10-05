@@ -69,7 +69,7 @@ function acquire() {
             showAlert('Not Connected', 'You must CONNECT TO SERIAL first.');
         } else {
           addPoint(parseValue(latestValue));
-            // plotPoints(points);
+          plotPoints();
         }
     } else if (!checked && points.length > 1) {
         // previous point without the `ts` key
@@ -94,13 +94,16 @@ function printPoints(){
     .selectAll('p')
     .data(points)
     .join('p')
-    .html(d => `<span>${dtFormat(new Date(d.ts))} ></span> ${d.raw}`);
+    .html(d => `<span>${dtFormat(new Date(d.ts))} ></span> ${d.raw}`.replace('undefined', ''));
 
   // always scroll down so that latest value is visible at the bottom
   $('#scrollablePanel').prop(
     'scrollTop',
     $('#scrollablePanel').prop('scrollHeight')
   );
+
+  // update plot
+  plotPoints();
 }
 
 // Function to restart the interval with a new period

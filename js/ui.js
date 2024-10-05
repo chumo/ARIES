@@ -90,7 +90,7 @@ function resizePanel(e) {
     const newTop = e.clientY;
 
     // Make sure the new top doesn't go above the main content area
-    if (newTop > 100 && newTop < (window.innerHeight - 50)) {
+    if (newTop > 100 && newTop < (window.innerHeight - 40)) {
         const height = window.innerHeight - newTop;
         scrollablePanel.style.height = `${height}px`;
     }
@@ -104,7 +104,7 @@ function resizePanelTouch(e) {
     const newTop = touch.clientY;
 
     // Make sure the new top doesn't go above the main content area
-    if (newTop > 100 && newTop < (window.innerHeight - 50)) {
+    if (newTop > 100 && newTop < (window.innerHeight - 40)) {
         const height = window.innerHeight - newTop;
         scrollablePanel.style.height = `${height}px`;
     }

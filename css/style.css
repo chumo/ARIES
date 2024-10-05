@@ -1,3 +1,7 @@
+body {
+    overflow-y: hidden; /* Prevent vertical scrollbar */
+}
+
 .title {
     background-color: lightsteelblue;
     padding: 5px;
@@ -51,6 +55,7 @@
     left: -250px;
     background-color: #343a40;
     transition: all 0.3s;
+    overflow-y: auto;
 }
 
 #sidebar.show {
@@ -124,7 +129,7 @@ main {
     line-height: 0.1;
     position: fixed;
     bottom: 0;
-    height: 150px;
+    height: 50px;
     /* Initial height */
     overflow-y: auto;
     background-color: #f1f1f1;
@@ -141,6 +146,10 @@ main {
 
 #scrollablePanel span {
     color: blue;
+}
+
+#plotId {
+    height: calc(100vh - 110px);
 }
 
 /* Header alignment */
@@ -163,10 +172,6 @@ main {
 .navbar-logo {
     display: flex;
     align-items: center;
-}
-
-#sidebar {
-    overflow-y: auto;
 }
 
 /* Styles for the DataTable in sidebar */
@@ -287,7 +292,7 @@ main {
 }
 
 .panelDiv {
-    margin: 0px 10px 10px;
+    margin: 5px 10px 10px;
 }
 
 #projectInfo {
