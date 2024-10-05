@@ -29,9 +29,9 @@ function getBaudrate() {
   }
 
 // Toggle sidebar
-document.getElementById('burgerButton').addEventListener('click', function () {
-    const sidebar = document.getElementById('sidebar');
-    const scrollablePanel = document.getElementById('scrollablePanel');
+$('#burgerButton').click(function () {
+    const sidebar = $('#sidebar')[0];
+    const scrollablePanel = $('#scrollablePanel')[0];
 
     sidebar.classList.toggle('show');
 
@@ -75,23 +75,22 @@ function showAlert(title, message) {
 }
 
 // Resizing logic for both desktop and mobile
-const scrollablePanel = document.getElementById('scrollablePanel');
 let isResizing = false;
 
 // Desktop: mouse events
-scrollablePanel.addEventListener('mousedown', function (e) {
+$('#scrollablePanel').on('mousedown', function (e) {
     isResizing = true;
-    document.body.style.userSelect = 'none'; // Disable text selection during resizing
-    document.addEventListener('mousemove', resizePanel);
-    document.addEventListener('mouseup', stopResizing);
+    $('body').css('user-select', 'none'); // Disable text selection during resizing
+    $(document).mousemove(resizePanel);
+    $(document).mouseup(stopResizing);
 });
 
 // Mobile: touch events
-scrollablePanel.addEventListener('touchstart', function (e) {
+$('#scrollablePanel').on('touchstart', function (e) {
     isResizing = true;
-    document.body.style.userSelect = 'none'; // Disable text selection during resizing
-    document.addEventListener('touchmove', resizePanelTouch);
-    document.addEventListener('touchend', stopResizing);
+    $('body').css('user-select', 'none'); // Disable text selection during resizing
+    $(document).on('touchmove', resizePanelTouch);
+    $(document).on('touchend', stopResizing);
 });
 
 function resizePanel(e) {

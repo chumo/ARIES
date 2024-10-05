@@ -1,6 +1,6 @@
 let clicked = [undefined, undefined];
 
-let graphDiv = document.getElementById('plotId');
+let graphDiv = $('#plotId')[0];
 
 ///////////////////////////////////////////////////////////////////////////////
 function initPlot() {
