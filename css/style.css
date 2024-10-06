@@ -63,7 +63,7 @@ body {
 }
 
 /* Styles for the modal panel */
-#modalPanel {
+.modalPanel {
     display: none;
     position: fixed;
     top: 50%;
@@ -77,7 +77,7 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-#modalPanel h4 {
+.modalPanel h4 {
     color: blue;
 }
 

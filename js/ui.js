@@ -55,23 +55,25 @@ $('#burgerButton').click(function () {
 });
 
 // Close modal panel with button
-$('#closeModalButton').on('click', function () {
-    $('#modalPanel').hide();
+$('.close').on('click', function () {
+
+    $('#alertPanel').hide();
     $('#modalOverlay').hide();
 });
 
 // Close modal panel by clicking outside
 $('#modalOverlay').on('click', function () {
-    $('#modalPanel').hide();
+
+    $('#alertPanel').hide();
     $('#modalOverlay').hide();
 });
 
 function showAlert(title, message) {
-    $('#modalPanel h4').text(title);
-    $('#modalPanel p').text(message);
-    $('#modalPanel').show();
     $('#modalOverlay').show();
-    $('#modalPanel button').focus();
+    $('#alertPanel h4').text(title);
+    $('#alertPanel p').text(message);
+    $('#alertPanel').show();
+    $('#alertPanel button').focus();
 }
 
 // Resizing logic for both desktop and mobile
