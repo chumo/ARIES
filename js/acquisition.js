@@ -69,11 +69,10 @@ function acquire() {
             showAlert('Not Connected', 'You must CONNECT TO SERIAL first.');
         } else {
           addPoint(parseValue(latestValue));
-          plotPoints();
         }
     } else if (!checked && points.length > 1) {
         // previous point without the `ts` key
-        let {ts, ...previous} = points.slice(-1)[0];
+        let {ts, raw, ...previous} = points.slice(-1)[0];
         let anyDefined = Object.values(previous).some(d => d !== undefined);
         if (anyDefined) {
             // only if any value is not undefined
@@ -84,7 +83,8 @@ function acquire() {
 
 function addPoint(point){
   points.push(point);
-  setData(points);
+  updatePlot();
+  setData();
   printPoints();
 }
 
@@ -102,8 +102,6 @@ function printPoints(){
     $('#scrollablePanel').prop('scrollHeight')
   );
 
-  // update plot
-  plotPoints();
 }
 
 // Function to restart the interval with a new period

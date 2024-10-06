@@ -16,11 +16,11 @@ function setInfo(value) {
     }
   }
 
-function setData(value) {
-    // set info in local storage
+function setData() {
+    // set data points in local storage
     let projectName = getSelectedProject();
     if (projectName) {
-        storage.setField('data', value, projectName);
+        storage.setField('data', points, projectName);
     }
   }
 
@@ -131,6 +131,9 @@ function stopResizing() {
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    // initialize plot
+    initPlot();
+
     // store info on each keystroke
     $('#projectInfo').on('input', function() {
         setInfo($(this).val());
@@ -186,6 +189,7 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#projectInfo').val('');
         points = [];
         printPoints();
+        plotPoints();
     });
 
     function addRow(name, createdAt) {
@@ -266,6 +270,8 @@ document.addEventListener('DOMContentLoaded', function () {
             points = project.data;
             // display data in the terminal
             printPoints();
+            // display data in plot
+            plotPoints();
         }
     });
 
@@ -283,6 +289,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function ensureRowSelection() {
         if (table.rows().count() > 0 && table.rows({ selected: true }).count() === 0) {
             table.row(0).select();
+        } else if (table.rows().count() === 0) {
+            points = [];
+            printPoints();
+            plotPoints();
         }
     }
 
