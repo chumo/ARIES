@@ -10,11 +10,12 @@ let interval = null;
 
 let dtFormat = d3.timeFormat("%Y-%m-%d %H:%M:%S.%L");
 
+///////////////////////////////////////////////////////////////////////////////
 function isConnected(){
   return appendStream instanceof WritableStream;
 }
 
-// FUNCTION TO START THE SERIAL PORT AND THE CONTINUOUS UPDATE OF latestValue
+// FUNCTION TO START THE SERIAL PORT AND THE CONTINUOUS UPDATE OF latestValue /
 async function getReader() {
     // Inspired by https://github.com/svendahlstrand/web-serial-api
 
@@ -59,7 +60,7 @@ async function getReader() {
 
 }
 
-// FUNCTION TO FETCH PERIODICALLY AND PLOT THE latestValue
+// FUNCTION TO FETCH PERIODICALLY AND PLOT THE latestValue ////////////////////
 function acquire() {
     let checked = $('#switch').prop('checked');
     if (checked) {
@@ -81,6 +82,7 @@ function acquire() {
     }
 }
 
+///////////////////////////////////////////////////////////////////////////////
 function addPoint(point){
   points.push(point);
   updatePlot();
@@ -88,6 +90,7 @@ function addPoint(point){
   printPoints();
 }
 
+///////////////////////////////////////////////////////////////////////////////
 function printPoints(){
   // display data in the terminal
   d3.select('#scrollablePanel')
@@ -104,7 +107,7 @@ function printPoints(){
 
 }
 
-// Function to restart the interval with a new period
+// Function to restart the interval with a new period /////////////////////////
 function setIntervalValue() {
   let sampling = parseFloat($('#intervalInput').val())*1000
 
@@ -154,6 +157,7 @@ function parseValue(input) {
 
   // add the current Unix epoch in milliseconds
   result['ts'] = Date.now();
+
   // add the raw data for reference
   result['raw'] = input
 

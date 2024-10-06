@@ -296,18 +296,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Call after any change to the table
-    // table.on('draw', ensureRowSelection);
-
     // Populate table with data from local storage
     populateTableFromLocalStorage();
-
-    // Prevent deselection
-    // table.on('user-select', function (e, dt, type, cell, originalEvent) {
-    //     if (table.rows({ selected: true }).count() === 0) {
-    //         e.preventDefault();
-    //     }
-    // });
 
     // Add this new function to populate the table from local storage
     function populateTableFromLocalStorage() {
