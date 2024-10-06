@@ -89,6 +89,7 @@ function showConfirm(title, message, row) {
     $('#confirmPanel').show();
     $('#confirmPanel .close').focus();
 
+    $('#confirmBtn').off('click');
     $('#confirmBtn').on('click', function(){
         hideModals();
         let project = row.data().name;
@@ -326,17 +327,6 @@ document.addEventListener('DOMContentLoaded', function () {
         )
     });
 
-    // Ensure a row is always selected if there are rows
-    function ensureRowSelection() {
-        if (table.rows().count() > 0 && table.rows({ selected: true }).count() === 0) {
-            table.row(0).select();
-        } else if (table.rows().count() === 0) {
-            points = [];
-            printPoints();
-            plotPoints();
-        }
-    }
-
     // Populate table with data from local storage
     populateTableFromLocalStorage();
 
@@ -368,6 +358,18 @@ function getSelectedProject(){
 
 function switchOff() {
     $('#switch').prop('checked', false);
+}
+
+// Ensure a row is always selected if there are rows
+function ensureRowSelection() {
+    let table = $('#sidebarTable').DataTable();
+    if (table.rows().count() > 0 && table.rows({ selected: true }).count() === 0) {
+        table.row(table.rows().count()-1).select();
+    } else if (table.rows().count() === 0) {
+        points = [];
+        printPoints();
+        plotPoints();
+    }
 }
 
 $('#intervalInput').on('change', setIntervalValue);
