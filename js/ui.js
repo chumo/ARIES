@@ -307,6 +307,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Download data
+    $('#sidebarTable').on('click', '.download-btn', function () {
+        let row = table.row($(this).closest('tr'));
+        let projectName = row.data().name;
+        exportProject(projectName);
+    });
+
     // Delete row
     $('#sidebarTable').on('click', '.delete-btn', function () {
         let row = table.row($(this).closest('tr'));
