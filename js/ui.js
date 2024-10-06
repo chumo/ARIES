@@ -143,10 +143,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var table = $('#sidebarTable').DataTable({
         columns: [
             {
-                data: null,
-                defaultContent: '<i class="fas fa-trash-alt delete-btn"></i>',
+                data: 'null',
+                defaultContent: '<i class="fas fa-download download-btn"></i>',
                 orderable: false,
-                width: '10%'
+                width: '10%',
+                class: 'download'
             },
             {
                 data: 'name',
@@ -161,6 +162,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Hidden column for ordering
                 data: 'createdAt',
                 visible: false
+            },
+            {
+                data: null,
+                defaultContent: '<i class="fas fa-trash-alt delete-btn"></i>',
+                orderable: false,
+                width: '10%',
+                class: 'delete'
             },
         ],
         select: {
@@ -183,7 +191,6 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#addRowBtn').on('click', function () {
         switchOff();
         let createdAt = new Date().toISOString();
-        // let newRow = table.row.add({name: '', createdAt: createdAt}).draw().node();
         let newRow = addRow('', createdAt);
         $(newRow).find('td:nth-child(2)').trigger('dblclick');
         $('#projectInfo').val('');
@@ -194,9 +201,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addRow(name, createdAt) {
         let newRow = table.row.add({name: name, createdAt: createdAt}).draw().node();
-        // $(newRow).on('select', function () {
-        //     console.log('new row selected: ');//, table.row(newRow).data()
-        // });
         return newRow;
     }
 

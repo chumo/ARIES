@@ -192,14 +192,6 @@ main {
     margin: 10px 10px;
 }
 
-.deleteBtn {
-    padding: 2px 5px;
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
 /* Modify these styles */
 #sidebar table.dataTable tbody td {
     text-align: left;
@@ -269,23 +261,35 @@ main {
     height: 100%;
 }
 
+.delete {
+    background-color:lightcoral;
+}
+
+.download {
+    background-color:lightslategray;
+}
+
 #switch {
     margin-left: 5px;
     margin-right: 5px;
     padding-left: 5px;
 }
+
 .label {
     font-size: 14px;
     color: white;
     padding-left: 5px;
     line-height: 1.2; /* Reduced interline distance */
 }
+
 #intervalInput {
     width: 50%;
 }
+
 #dropdownBaudRate {
     width: 100%;
 }
+
 .form-switch {
     padding-left: 0px;
     padding-top: 2px;
