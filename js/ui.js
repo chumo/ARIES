@@ -56,24 +56,47 @@ $('#burgerButton').click(function () {
 
 // Close modal panel with button
 $('.close').on('click', function () {
+    hideModals();
+});
 
-    $('#alertPanel').hide();
-    $('#modalOverlay').hide();
+$('#cancelBtn').on('click', function(){
+    hideModals();
 });
 
 // Close modal panel by clicking outside
 $('#modalOverlay').on('click', function () {
+    hideModals();
+});
 
+function hideModals() {
+    $('#confirmPanel').hide();
     $('#alertPanel').hide();
     $('#modalOverlay').hide();
-});
+}
 
 function showAlert(title, message) {
     $('#modalOverlay').show();
     $('#alertPanel h4').text(title);
-    $('#alertPanel p').text(message);
+    $('#alertPanel p').html(message);
     $('#alertPanel').show();
-    $('#alertPanel button').focus();
+    $('#alertPanel .close').focus();
+}
+
+function showConfirm(title, message, row) {
+    $('#modalOverlay').show();
+    $('#confirmPanel h4').text(title);
+    $('#confirmPanel p').html(message);
+    $('#confirmPanel').show();
+    $('#confirmPanel .close').focus();
+
+    $('#confirmBtn').on('click', function(){
+        hideModals();
+        let project = row.data().name;
+        row.remove().draw();
+        // delete the corresponding local storage item
+        storage.removeItem(project);
+        ensureRowSelection();
+    });
 }
 
 // Resizing logic for both desktop and mobile
@@ -228,7 +251,10 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (existingProjects.includes(newText) & currentText !== newText){
                 // if the name already exists, show alert and delete the row
                 $(this).trigger('dblclick');
-                showAlert('Duplicate Names', 'A project with the same name already exists. Please use a different name.');
+                showAlert(
+                    'Duplicate Names',
+                    'A project with the same name already exists. Please use a different name.'
+                );
             } else {
                 cell.data(newText).draw();
                 // log the content of the row
@@ -282,13 +308,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Delete row
-    $('#sidebarTable').on('click', '.delete-btn', function (e, dt, type, cell) {
+    $('#sidebarTable').on('click', '.delete-btn', function () {
         let row = table.row($(this).closest('tr'));
-        let storageKey = row.data().name;
-        row.remove().draw();
-        // delete the corresponding local storage item
-        storage.removeItem(storageKey);
-        ensureRowSelection();
+        showConfirm(
+            'Warning',
+            `Are you sure you want to delete project "<strong>${row.data().name}</strong>"`
+            + ' and all its data?'
+            + '<br>THIS ACTION CANNOT BE UNDONE.',
+            row
+        )
     });
 
     // Ensure a row is always selected if there are rows
