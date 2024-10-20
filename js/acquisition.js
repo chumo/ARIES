@@ -50,7 +50,9 @@ async function getReader() {
     // Remove the button so that user cannot open the port twice.
     $('#dropdownBaudRate').addClass('disabled');
     $('#connectButton').addClass('disabled');
-    $('#connectButton').html(`connected to<br><strong>Vid:</strong> ${port.getInfo().usbVendorId}, <strong>Pid:</strong> ${port.getInfo().usbProductId}`);
+    let Vid = port.getInfo().usbVendorId || '?';
+    let Pid = port.getInfo().usbProductId || '?';
+    $('#connectButton').html(`connected to<br><strong>Vid:</strong> ${Vid}, <strong>Pid:</strong> ${Pid}`);
 
     appendStream = new WritableStream({
       write(chunk) {
