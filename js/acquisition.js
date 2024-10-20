@@ -68,8 +68,11 @@ function acquire() {
         if (!isConnected()){
             $('#switch').prop('checked', false);
             showAlert('Not Connected', 'You must CONNECT TO SERIAL first.');
+        } else if (getSelectedProject() === null) {
+            $('#switch').prop('checked', false);
+            showAlert('No Project Selected', 'You must select a project.<br>Add a Project if there is none.');
         } else {
-          addPoint(parseValue(latestValue));
+            addPoint(parseValue(latestValue));
         }
     } else if (!checked && points.length > 1) {
         // previous point without the `ts` key
