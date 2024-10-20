@@ -33,12 +33,24 @@ async function getReader() {
     // Wait for the serial port to open.
     await port.open({ baudRate:  getBaudrate()});
 
+    // Listen for disconnect event
+    port.addEventListener('disconnect', () => {
+        console.log('USB device has been disconnected.');
+        // Enable the connect button
+        $('#dropdownBaudRate').removeClass('disabled');
+        $('#connectButton').removeClass('disabled');
+        $('#connectButton').html('CONNECT TO SERIAL');
+        // stop acquiring data
+        $('#switch').prop('checked', false);
+        showAlert('Device Lost', 'The serial device has been disconnected.');
+        // no more WritableStream
+        appendStream = null;
+    });
+
     // Remove the button so that user cannot open the port twice.
     $('#dropdownBaudRate').addClass('disabled');
     $('#connectButton').addClass('disabled');
     $('#connectButton').html(`connected to<br><strong>Vid:</strong> ${port.getInfo().usbVendorId}, <strong>Pid:</strong> ${port.getInfo().usbProductId}`);
-
-    // initPlot();
 
     appendStream = new WritableStream({
       write(chunk) {
