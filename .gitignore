@@ -18,6 +18,7 @@ yarn.lock
 # Temporary files
 tmp/
 temp/
+dev/
 
 # IDE specific files
 .vscode/
