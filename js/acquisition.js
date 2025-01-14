@@ -146,12 +146,12 @@ function setIntervalValue() {
 // Parse reading values
 function parseValue(input) {
   // Example usage (a key named "ts" for timestamp will be added):
-  // console.log(parseToJSON("A:1.5,B:2.3")); // { A: 1.5, B: 2.3 }
-  // console.log(parseToJSON("A:1.5 B:2.3")); // { A: 1.5, B: 2.3 }
-  // console.log(parseToJSON("A=1.5,B=2.3")); // { A: 1.5, B: 2.3 }
-  // console.log(parseToJSON("A=1.5 B=2.3")); // { A: 1.5, B: 2.3 }
-  // console.log(parseToJSON("1.1,2.2"));     // { key1: 1.1, key2: 2.2 }
-  // console.log(parseToJSON("1.1 2.2"));     // { key1: 1.1, key2: 2.2 }
+  // console.log(parseValue("A:1.5,B:2.3")); // { A: 1.5, B: 2.3 }
+  // console.log(parseValue("A:1.5 B:2.3")); // { A: 1.5, B: 2.3 }
+  // console.log(parseValue("A=1.5,B=2.3")); // { A: 1.5, B: 2.3 }
+  // console.log(parseValue("A=1.5 B=2.3")); // { A: 1.5, B: 2.3 }
+  // console.log(parseValue("1.1,2.2"));     // { key1: 1.1, key2: 2.2 }
+  // console.log(parseValue("1.1 2.2"));     // { key1: 1.1, key2: 2.2 }
   const result = {};
   const pairs = input.split(/[, ]+/); // Split by comma or space
 
