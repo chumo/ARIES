@@ -127,6 +127,7 @@ main {
 #scrollablePanel {
     font-family: 'Ubuntu Mono', monospace;
     line-height: 0.1;
+    white-space: nowrap;
     position: fixed;
     bottom: 0;
     height: 50px;
