@@ -1,7 +1,5 @@
 /*
-  Reads an analog input on pin 0, prints the result to the Serial Monitor.
-  Graphical representation is available using Serial Plotter (Tools > Serial Plotter menu).
-  Attach the center pin of a potentiometer to pin A0, and the outside pins to +5V and ground.
+  Reads an analog input on pin 0 and 1, and prints the result in the Serial port.
 */
 
 // the setup routine runs once when you press reset:

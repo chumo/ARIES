@@ -12,9 +12,18 @@ The data acquisition is done using the [Web Serial API](https://developer.mozill
 #### Prepare your Arduino
 1. Download and install the Arduino IDE so that you can upload libraries to your Arduino (in  https://www.arduino.cc/en/main/software go to "Download the Arduino IDE").
 
-2. Connect the Arduino via usb to the computer, open the Arduino IDE and create a `.ino` file that you need to upload to the Arduino board using the button `upload` (or go to the menu `Sketch > Upload`). The `loop` function should always print data to the serial port using a comma separated key:value format such as "A0:1023,A1:1023". That is achieved by using the command `Serial.println("A0:1023,A1:1023");`. See `arduino/firmware/firmware.ino` for an example.
+2. Connect the Arduino via usb to the computer, open the Arduino IDE and create a `.ino` file (for example [arduino.ino](arduino/arduino.ino)) that you need to upload to the Arduino board using the button `upload` (or go to the menu `Sketch > Upload`).
 
 3. Close the IDE program. Your hardware is ready.
+
+NOTE: The `loop` function of your `.ino` file should always print data to the serial port (with the function `Serial.println(<STRING>);`) using a comma or space separated `key:value` or `key=value` format, or simply a comma or space separated values, such as:
+
+  - "A:1.5,B:2.3"
+  - "A:1.5 B:2.3"
+  - "A=1.5,B=2.3"
+  - "A=1.5 B=2.3"
+  - "1.1,2.2"
+  - "1.1 2.2"
 
 #### Web interface
 1. Go to [https://chumo.github.io/SCOPE/index.html](https://chumo.github.io/SCOPE/index.html).
