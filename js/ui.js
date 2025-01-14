@@ -337,7 +337,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const value = storage.getItem(key);
 
             // Add a new row to the table and use the createdAt as the order
-            addRow(key, value.createdAt)
+            if (value && value.createdAt) {
+                addRow(key, value.createdAt);
+            } else {
+                console.log(`LocalStorage key "${key}" is not a valid project`);
+            }
         }
     }
 
