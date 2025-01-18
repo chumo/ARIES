@@ -50,7 +50,6 @@ function plotPoints() {
         y: points.map(d => d[key]),
         type: 'scatter',
         mode: 'lines+markers',
-        fill: 'tozeroy',
         name: key,
       });
     });
