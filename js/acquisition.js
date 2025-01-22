@@ -41,7 +41,7 @@ async function getReader() {
         $('#connectButton').removeClass('disabled');
         $('#connectButton').html('CONNECT TO SERIAL');
         // stop acquiring data
-        $('#switch').prop('checked', false);
+        switchOff();
         showAlert('Device Lost', 'The serial device has been disconnected.');
         // no more WritableStream
         appendStream = null;
@@ -80,10 +80,10 @@ function acquire() {
     if (checked) {
         // we cannot read data if it is not connected
         if (!isConnected()){
-            $('#switch').prop('checked', false);
+            switchOff();
             showAlert('Not Connected', 'You must CONNECT TO SERIAL first.');
         } else if (getSelectedProject() === null) {
-            $('#switch').prop('checked', false);
+            switchOff();
             showAlert('No Project Selected', 'You must select a project.<br>Add a Project if there is none.');
         } else {
             addPoint(parseValue(latestValue));
@@ -103,7 +103,6 @@ function acquire() {
 function addPoint(point){
   points.push(point);
   updatePlot();
-  setData();
   printPoints();
 }
 

@@ -233,7 +233,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // New row creation
     $('#addRowBtn').on('click', function () {
-        switchOff();
         let createdAt = new Date().toISOString();
         let newRow = addRow('', createdAt);
         $(newRow).find('td:nth-child(2)').trigger('dblclick');
@@ -312,8 +311,6 @@ document.addEventListener('DOMContentLoaded', function () {
     table.on('select', function () {
         let projectName = getSelectedProject();
         if (projectName !== ''){
-            // switch off reading
-            switchOff();
             // load info into text area
             let project = storage.getItem(projectName);
             $('#projectInfo').val(project.info);
