@@ -296,6 +296,10 @@ main {
     width: 50%;
 }
 
+#savingIntervalInput {
+    width: 50%;
+}
+
 #dropdownBaudRate {
     width: 100%;
 }
@@ -306,7 +310,7 @@ main {
 }
 
 .panelDiv {
-    margin: 5px 10px 10px;
+    margin: 5px 10px;
 }
 
 #projectInfo {

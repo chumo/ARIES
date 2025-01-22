@@ -8,22 +8,6 @@ function setBaudrate(value) {
     $('#baudRate' + value).addClass('active');
   }
 
-function setInfo(value) {
-    // set info in local storage
-    let projectName = getSelectedProject();
-    if (projectName) {
-        storage.setField('info', value, projectName);
-    }
-  }
-
-function setData() {
-    // set data points in local storage
-    let projectName = getSelectedProject();
-    if (projectName) {
-        storage.setField('data', points, projectName);
-    }
-  }
-
 function getBaudrate() {
     return parseInt($('#dropdownBaudRate').text().split(' ')[1]);
   }
@@ -392,3 +376,4 @@ function ensureRowSelection() {
 }
 
 $('#intervalInput').on('change', setIntervalValue);
+$('#savingIntervalInput').on('change', setSavingIntervalValue);

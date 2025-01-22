@@ -55,3 +55,18 @@ class LocalStorageManager {
   }
 
 
+function setInfo(value) {
+    // set info in local storage
+    let projectName = getSelectedProject();
+    if (projectName) {
+        storage.setField('info', value, projectName);
+    }
+  }
+
+function setData() {
+    // set data points in local storage
+    let projectName = getSelectedProject();
+    if (projectName) {
+        storage.setField('data', points, projectName);
+    }
+  }

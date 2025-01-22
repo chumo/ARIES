@@ -7,6 +7,7 @@ let latestValue = '';
 let appendStream = null;
 
 let interval = null;
+let savingInterval = null;
 
 let dtFormat = d3.timeFormat("%Y-%m-%d %H:%M:%S.%L");
 
@@ -142,6 +143,26 @@ function setIntervalValue() {
 
 }
 
+// Function to restart the saving interval with a new period //////////////////
+function setSavingIntervalValue() {
+  let sampling = parseFloat($('#savingIntervalInput').val())*1000
+
+  if (isNaN(sampling) || sampling < 60000) {
+      console.error('The saving interval time is too small. Back to default.');
+      $('#savingIntervalInput').val(60);
+      sampling = 60000;
+  }
+
+  // clear interval if it already exists
+  if (savingInterval){
+    clearInterval(savingInterval);
+  }
+
+  savingInterval = setInterval(setData, sampling);
+
+}
+
+
 // Parse reading values
 function parseValue(input) {
   // Example usage (a key named "ts" for timestamp will be added):
@@ -180,5 +201,6 @@ function parseValue(input) {
   return result;
 }
 
-// start with default interval
+// start with default intervals
 setIntervalValue();
+setSavingIntervalValue();
