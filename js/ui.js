@@ -168,11 +168,18 @@ document.addEventListener('DOMContentLoaded', function () {
     // save data when the switch is toggled off
     $('#switch').on('change', function() {
         if ($(this).is(':checked')) {
+            // switch is toggled on
             $('#overlay').show();
             $('#addRowBtn').prop('disabled', true);
+            $('#projectInfo').prop('disabled', true);
+            $('#projectInfo').css('background-color', '#b3dbff');
         } else {
+            // switch is toggled off
             $('#overlay').hide();
             $('#addRowBtn').prop('disabled', false);
+            $('#projectInfo').prop('disabled', false);
+            $('#projectInfo').css('background-color', 'aliceblue');
+            setData();
         }
     });
 
@@ -372,7 +379,7 @@ function getSelectedProject(){
 }
 
 function switchOff() {
-    $('#switch').prop('checked', false);
+    $('#switch').prop('checked', false).trigger('change');
 }
 
 // Ensure a row is always selected if there are rows
