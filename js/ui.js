@@ -165,6 +165,17 @@ document.addEventListener('DOMContentLoaded', function () {
         setInfo($(this).val());
     });
 
+    // save data when the switch is toggled off
+    $('#switch').on('change', function() {
+        if ($(this).is(':checked')) {
+            $('#overlay').show();
+            $('#addRowBtn').prop('disabled', true);
+        } else {
+            $('#overlay').hide();
+            $('#addRowBtn').prop('disabled', false);
+        }
+    });
+
     // create the table
     var table = $('#sidebarTable').DataTable({
         columns: [
