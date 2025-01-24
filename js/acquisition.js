@@ -56,16 +56,17 @@ async function getReader() {
     $('#connectButton').html(`connected to<br><strong>Vid:</strong> ${Vid}, <strong>Pid:</strong> ${Pid}`);
 
     appendStream = new WritableStream({
+
       write(chunk) {
-
         lineBuffer += chunk;
-        let lines = lineBuffer.split('\r\n');
 
-        if (lines.length > 1) {
-          lineBuffer = lines.pop();
-          latestValue=lines.pop();
+        // Find the last complete line in the buffer
+        const lastLineMatch = lineBuffer.match(/.*?\r\n/);
+
+        if (lastLineMatch) {
+          latestValue = lastLineMatch[0].trim();
+          lineBuffer = lineBuffer.slice(lastLineMatch[0].length);
         }
-
       }
     });
 
