@@ -17,5 +17,5 @@ void loop() {
   // print out the values in the Serial Monitor
   // using a comma separated key:value format such as "A0:1023,A1:1023":
   Serial.println("A0:" + String(A0) + ",A1:" + String(A1));
-  delay(1);        // delay in between reads for stability
+  delay(100);        // delay in between reads for stability
 }
