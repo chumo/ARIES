@@ -304,6 +304,10 @@ main {
     width: 100%;
 }
 
+#dropdownExperiments {
+    width: 200px;
+}
+
 .form-switch {
     padding-left: 0px;
     padding-top: 2px;
@@ -316,4 +320,9 @@ main {
 #projectInfo {
     font-size: 14px;
     background-color: aliceblue;
+}
+
+.dashboard {
+    overflow: auto;
+    margin-top: 0px;
 }
